@@ -1630,13 +1630,71 @@ check_pixel_test14
     ${check}=    Create dictionary     impression=${cat_range}    click=${catclk_range}    conversion=${catcv_range}    visitor=${visitor_range}
     check_Report_count    ${tran_pixel_data}    ${check}
 
-check_pixel_name_search_test
-    Documentation]    檢查 Pixel Name Search 搜尋pixel name是否成功
+
+
+check_pixel_name_search_test1
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功 (搜尋的到,數量為5,tagType=1)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${time1}=    generate_time    ${log1_cost_day}
+    ${date1}=    timetransfer_time_into_date  ${time1}
+    ${str_date1}=    transfer_date_to_string  ${date1}
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=1    search_tagName=evenTag
+    ${search_pixel_sum}=    Get Length    ${pixelDaySum}
+    ${all_pixel_sum}=    evaluate    5
+    Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
+
+check_pixel_name_search_test2
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功 (搜尋的到,數量為5,tagType=2)
     ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
     ${time1}=    generate_time    ${log1_cost_day}
     ${date1}=    timetransfer_time_into_date    ${time1}
     ${str_date1}=    transfer_date_to_string    ${date1}
-    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=2    search_tagName=pixel_offsitename
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=2    search_tagName=Pixel-offsitetest
     ${search_pixel_sum}=    Get Length    ${pixelDaySum}
-    ${all_pixel_sum}=    Convert to integer    5
+    ${all_pixel_sum}=    evaluate    5
+    Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
+
+
+check_pixel_name_search_test3
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功  (搜尋不到,數量為0,tagType=1)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${time1}=    generate_time    ${log1_cost_day}
+    ${date1}=    timetransfer_time_into_date    ${time1}
+    ${str_date1}=    transfer_date_to_string    ${date1}
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=1    search_tagName=Magneto
+    ${search_pixel_sum}=    Get Length    ${pixelDaySum}
+    ${all_pixel_sum}=    evaluate    0
+    Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
+
+check_pixel_name_search_test4
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功  (搜尋不到,數量為0,tagType=2)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${time1}=    generate_time    ${log1_cost_day}
+    ${date1}=   timetransfer_time_into_date    ${time1}
+    ${str_date1}=   transfer_date_to_string    ${date1}
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=2    search_tagName=Magneto
+    ${search_pixel_sum}=    Get Length    ${pixelDaySum}
+    ${all_pixel_sum}=    evaluate    0
+    Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
+
+check_pixel_name_search_test5
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功  (搜尋中文,數量為0,tagType=1)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${time1}=    generate_time    ${log1_cost_day}
+    ${date1}=   timetransfer_time_into_date    ${time1}
+    ${str_date1}=   transfer_date_to_string    ${date1}
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=1    search_tagName=中文
+    ${search_pixel_sum}=    Get Length    ${pixelDaySum}
+    ${all_pixel_sum}=    evaluate    0
+    Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
+
+check_pixel_name_search_test6
+    [Documentation]     檢查 Pixel Name Search 搜尋pixel name是否成功  (搜尋中文,數量為0,tagType=2)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${time1}=    generate_time    ${log1_cost_day}
+    ${date1}=    timetransfer_time_into_date    ${time1}
+    ${str_date1}=    transfer_date_to_string    ${date1}
+    ${pixelDaySum}=    get_report_behaviorDaySum    ${login_response}    ${SITE1}    ${start_date}    ${str_date1}    tagType=2    search_tagName=中文
+    ${search_pixel_sum}=    Get Length    ${pixelDaySum}
+    ${all_pixel_sum}=    evaluate    0
     Should be Equal    ${all_pixel_sum}    ${search_pixel_sum}
