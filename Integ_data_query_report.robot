@@ -15,11 +15,11 @@ ${admin_PASSWORD}    retchat1603
 ${admin_ROLE}    adminrole
 
 #------ User setting ------#
-${USER_NAME}    queryreport1
+${USER_NAME}    queryreport
 ${PASSWORD}    123qwe
 ${ROLE}    contr
 ${SITE1}    site
-${CONTR_loginId}    queryreport1
+${CONTR_loginId}    queryreport
 
 #------
 
@@ -247,10 +247,6 @@ input_event_tag_tracking_log
     ${fromOutLink}    convert to string    http://rec-outlink-eventtag.com
     ${eventag_referer}    convert to string    http://eventag-referer.retchat.com
 
-    ${sessionId}=    generate_sessionId
-    ${retUid}=    generate_retuid
-    ${random}=    Generate Random String    1    [NUMBERS]
-
     ${useragent_list}    Create List    ${windows_IE}    ${windows_chrome}    ${windows_opera}    ${windows_firefox}    ${mobile_opera_windows}    ${mac_firefox}    ${mobile_IE}    ${mobile_android_chrome}    ${mobile_ios_iphone_chrome}    ${mobile_ios_ipad_chrome}
 
     #--------- 打 member 1 的 cat log 5 次 ----------#
@@ -290,34 +286,33 @@ input_event_tag_tracking_log
 input_campaign_pixel_tracking_log
     [Documentation]  input campaign pixel tracking log
     ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
-    ${contractor_allsite}=    get_element    ${login_response}     input_name=${None}      icem_name_param=${None}       icem_id_param=owningSiteList     get_what=get_owningSiteList
+    ${contractor_allsite}=    get_element    ${login_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
     ${site_id}    get_siteID    ${contractor_allsite}    ${SITE1}
 
-    ${icem_pixel_list}=    cam_get_pixel_list    ${login_response}    ${SITE1}    ${pixel_name}
-    ${icem_pixel_resp}=    get_icem_dic_resp    ${icem_pixel_list}    ${pixel_name}    campaign    get_what=get_campaign_pixel
-    ${pixel_cat_cert}=    transfer_pixel_data    ${icem_pixel_resp}    campixelbutton=ON
+    ${pixel}    Convert To String    ${pixel_name}
+    ${icem_pixel_resp}=    rec_get_TagPixelbyTagId    ${login_response}    ${SITE1}    ${pixel}
+    ${pixel_cat_cert}=    transfer_pixel_data    ${icem_pixel_resp}
     ${pixelid}=    evaluate    $pixel_cat_cert.get("pixelid")
     ${cert}=    evaluate    $pixel_cat_cert.get("cert")
 
-    ${sitetype}=    convert To String     p
+    ${sitetype}=    Convert To String     p
     ${fromOutLink}    convert to string    http://rec-outlink-campaign.com
-    ${pixel_referer}    convert to string    http://campaign-pixel-referer.retchat.com
+    ${campaign_referer}    convert to string    http://campaign-referer.retchat.com
 
     ${useragent_list}    Create List    ${windows_IE}    ${windows_chrome}    ${windows_opera}    ${windows_firefox}    ${mobile_opera_windows}    ${mac_firefox}    ${mobile_IE}    ${mobile_android_chrome}    ${mobile_ios_iphone_chrome}    ${mobile_ios_ipad_chrome}
-
 
     #--------- 打 member 1 的 cat log 5 次 ----------#
     ${param1}    convert to string    ${member1_param4}&${member1_param2}&${member1_param3}&${member1_param1}
     ${pixel_type}=  Convert To String    cat
-    :FOR    ${page}    IN RANGE   0   ${impression_log_times}
+    :FOR    ${page}    IN RANGE    0    ${impression_log_times}
        \    ${time}=    generate_time    ${log_cost_day}
        \    ${sessionId}=    generate_sessionId
        \    ${retUid}=    generate_retuid
        \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param1}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param1}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
 
     sleep    10
-    #--------- 打 member 2 的 catclk log 6 次 ----------#
+    #--------- 打 member 2 的 click log 6 次 ----------#
     ${param2}    convert to string    ${member2_param4}&${member2_param2}&${member2_param3}&${member2_param1}
     ${pixel_type}=  Convert To String    catclk
     :FOR    ${page}    IN RANGE    0    ${click_log_times}
@@ -325,7 +320,7 @@ input_campaign_pixel_tracking_log
        \    ${sessionId}=    generate_sessionId
        \    ${retUid}=    generate_retuid
        \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param2}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param2}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
 
     sleep    10
     #--------- 打 member 3 的 catcv log 7 次 ----------#
@@ -333,10 +328,10 @@ input_campaign_pixel_tracking_log
     ${pixel_type}=  Convert To String    catcv
     :FOR    ${page}    IN RANGE    0    ${conversion_log_times}
        \    ${time}=    generate_time    ${log_cost_day}
-       #\    ${sessionId}=    generate_sessionId
-       #\    ${retUid}=    generate_retuid
+       \    ${sessionId}=    generate_sessionId
+       \    ${retUid}=    generate_retuid
        \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    cat=${pixel_type}    ${pixelid}    ${cert}    param=${param3}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param3}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
 
     sleep    10
 
