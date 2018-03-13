@@ -1,4 +1,8 @@
 # -*- coding:utf-8 -*-
+#Data query report 中 ,qeury 的 parameter需要打log進去並且跑hourly cassandra才會出來
+#設定打進去的log中要打入對應的parameter,才會有東西,
+#Age:age,interests:interests,gender:gender,Device跟track method中的User_agent有關
+#Geo Location跟ip有關,Time of day為打入log的時間(hour),segment還不知道
 *** Settings ***
 Force Tags    測試 Data query report
 Library    ../lib/ICEMRobot.py    ${env}
@@ -102,6 +106,7 @@ ${mobile_ios_ipad_chrome}    Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleW
 
 ${app}    WEB
 
+
 *** Test Cases ***
 add_new_contractor
    [Documentation]  預先新增contractor
@@ -154,7 +159,7 @@ add_recommend_content
 
 add_recommendation
     [Documentation]   預先新增 recommendation
-     ${login_response}=    login    ${USER_NAME}    ${PASSWORD}     ${ROLE}
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}     ${ROLE}
     rec_add_Configuration    ${login_response}    ${SITE1}    ${rec_name1}    recommendType=ITEM_AUTO    isLimit=${False}    displayNum=${None}    contentName=pre_rec_content    behaviorType=BROWSING
     rec_add_Configuration    ${login_response}    ${SITE1}    ${rec_name2}    recommendType=ITEM_AUTO    isLimit=${False}    displayNum=${None}    contentName=pre_rec_content    behaviorType=BROWSING
     rec_add_Configuration    ${login_response}    ${SITE1}    ${rec_name3}    recommendType=ITEM_AUTO    isLimit=${False}    displayNum=${None}    contentName=pre_rec_content    behaviorType=BROWSING
@@ -163,10 +168,18 @@ add_recommendation
 add_recommendation_with_rule
      [Documentation]   預先新增  rule
     ${login_response}=   login   ${USER_NAME}    ${PASSWORD}   ${ROLE}
-    #rec_add_Configuration_Rule(self,login_response,  siteName, confName,ruleName,contentName,itemGroupName=None,ruleMemo=None,visit=None,memberAttrs=None,dateAttr=None,channel_type="WEB",scoreOperator="EQUAL",score=0, scoreRuleName="",check_button ='OFF')
     rec_add_Configuration_Rule    ${login_response}    ${SITE1}    ${rec_name1}    r1    ${rec_content}
     rec_add_Configuration_Rule    ${login_response}    ${SITE1}    ${rec_name2}    r1    ${rec_content}
     rec_add_Configuration_Rule    ${login_response}    ${SITE1}    ${rec_name3}    r1    ${rec_content}
+
+
+add_TagTrack
+    [Documentation]  預先  新增  Tag_track
+    ${login_response}=   login   ${USER_NAME}    ${PASSWORD}   ${ROLE}
+    ${cookieNamePair1}     Create dictionary      account_Name=MEMBER_ID
+    ${extParam}   Create list   ${query_key_1}  ${query_key_2}   ${query_key_3}
+    rec_add_TagTrack    ${login_response}    ${SITE1}   tagtrack1    trackmemo=memo123    trackstatus=ON    cookieNamePair=${cookieNamePair1}    extParam=${extParam}
+
 
 add_recommend_tag
      [Documentation]  新增 Recommend Tag
@@ -191,6 +204,13 @@ add_eventag
     ${triggerVOList}    Create list    ${trvo_click}    ${trvo_track}    ${trvo_convert}
     rec_add_TagPixel    ${login_response}   ${SITE1}    ${event_tag_name}    label=tagpixelonsite    memo=tagpixelonsite    pixelpayload=no    type=ON_SITE    triggerVOList=${triggerVOList}
 
+set_attribution_model
+    [Documentation]  set Miscellaneous 的 attribution model (conversion的計算方式)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    set_conversion_conf    ${login_response}    ${SITE1}    1    conversionevent=VISITOR    eventattrmodel=LAST_CLICK
+
+
+#--------- 打log ---------
 
 input_container_tag_tracking_log
     [Documentation]  input container tag tracking log
@@ -247,6 +267,10 @@ input_event_tag_tracking_log
     ${fromOutLink}    convert to string    http://rec-outlink-eventtag.com
     ${eventag_referer}    convert to string    http://eventag-referer.retchat.com
 
+    ${sessionId}=    generate_sessionId
+    ${retUid}=    generate_retuid
+    ${random}=    Generate Random String    1    [NUMBERS]
+
     ${useragent_list}    Create List    ${windows_IE}    ${windows_chrome}    ${windows_opera}    ${windows_firefox}    ${mobile_opera_windows}    ${mac_firefox}    ${mobile_IE}    ${mobile_android_chrome}    ${mobile_ios_iphone_chrome}    ${mobile_ios_ipad_chrome}
 
     #--------- 打 member 1 的 cat log 5 次 ----------#
@@ -286,33 +310,37 @@ input_event_tag_tracking_log
 input_campaign_pixel_tracking_log
     [Documentation]  input campaign pixel tracking log
     ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
-    ${contractor_allsite}=    get_element    ${login_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
+    ${contractor_allsite}=    get_element    ${login_response}     input_name=${None}      icem_name_param=${None}       icem_id_param=owningSiteList     get_what=get_owningSiteList
     ${site_id}    get_siteID    ${contractor_allsite}    ${SITE1}
 
-    ${pixel}    Convert To String    ${pixel_name}
-    ${icem_pixel_resp}=    rec_get_TagPixelbyTagId    ${login_response}    ${SITE1}    ${pixel}
-    ${pixel_cat_cert}=    transfer_pixel_data    ${icem_pixel_resp}
+    ${icem_pixel_list}=    cam_get_pixel_list    ${login_response}    ${SITE1}    ${pixel_name}
+    ${icem_pixel_resp}=    get_icem_dic_resp    ${icem_pixel_list}    ${pixel_name}    campaign    get_what=get_campaign_pixel
+    ${pixel_cat_cert}=    transfer_pixel_data    ${icem_pixel_resp}    campixelbutton=ON
     ${pixelid}=    evaluate    $pixel_cat_cert.get("pixelid")
     ${cert}=    evaluate    $pixel_cat_cert.get("cert")
 
-    ${sitetype}=    Convert To String     p
-    ${fromOutLink}    convert to string    http://rec-outlink-campaign.com
-    ${campaign_referer}    convert to string    http://campaign-referer.retchat.com
+    ${sitetype}=    convert To String     p
+    ${fromOutLink}    encoded_url    http://rec-outlink-campaign.com/html/331abdbdd9.html
+    ${pixel_referer}    encoded_url    http://campaign-pixel-referer.retchat.com/QAtracking_site/011.html
 
     ${useragent_list}    Create List    ${windows_IE}    ${windows_chrome}    ${windows_opera}    ${windows_firefox}    ${mobile_opera_windows}    ${mac_firefox}    ${mobile_IE}    ${mobile_android_chrome}    ${mobile_ios_iphone_chrome}    ${mobile_ios_ipad_chrome}
+
+    ${param1}    convert to string    ${member1_param4}&${member1_param2}&${member1_param3}&${member1_param1}
+    ${pixel_type}=  Convert To String    cat
+
 
     #--------- 打 member 1 的 cat log 5 次 ----------#
     ${param1}    convert to string    ${member1_param4}&${member1_param2}&${member1_param3}&${member1_param1}
     ${pixel_type}=  Convert To String    cat
-    :FOR    ${page}    IN RANGE    0    ${impression_log_times}
+    :FOR    ${page}    IN RANGE   0   ${impression_log_times}
        \    ${time}=    generate_time    ${log_cost_day}
        \    ${sessionId}=    generate_sessionId
        \    ${retUid}=    generate_retuid
        \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param1}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param1}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
 
     sleep    10
-    #--------- 打 member 2 的 click log 6 次 ----------#
+    #--------- 打 member 2 的 catclk log 6 次 ----------#
     ${param2}    convert to string    ${member2_param4}&${member2_param2}&${member2_param3}&${member2_param1}
     ${pixel_type}=  Convert To String    catclk
     :FOR    ${page}    IN RANGE    0    ${click_log_times}
@@ -320,18 +348,18 @@ input_campaign_pixel_tracking_log
        \    ${sessionId}=    generate_sessionId
        \    ${retUid}=    generate_retuid
        \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param2}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param2}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
 
     sleep    10
-    #--------- 打 member 3 的 catcv log 7 次 ----------#
-    ${param3}    convert to string    ${member3_param4}&${member3_param2}&${member3_param3}&${member3_param1}
-    ${pixel_type}=  Convert To String    catcv
-    :FOR    ${page}    IN RANGE    0    ${conversion_log_times}
-       \    ${time}=    generate_time    ${log_cost_day}
-       \    ${sessionId}=    generate_sessionId
-       \    ${retUid}=    generate_retuid
-       \    ${random}=    Generate Random String    1    [NUMBERS]
-       \    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${campaign_referer}    param=${param3}    app=${app}    User_Agent=${useragent_list[${random}]}    sitetype=${sitetype}
+    #--------- 打 member 3 的 catcv log ,conversion 有特別的count方式,需要設定attribute model ----------#
+    #--------- 此測試設定為 ----------#
+    ${param3}    convert to string    ${member3_param2}&${member3_param3}&${member3_param1}&${member3_param4}
+    ${pixel_type}=    Convert To String    catcv
+    ${time}=    generate_time    ${log_cost_day}
+    ${sessionId}=    generate_sessionId
+    ${retUid}=    generate_retuid
+    track_pixel    ${time}    ${site_id}    catclk    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param3}     User_Agent=${useragent_list[1]}    app=${app}    sitetype=${sitetype}
+    track_pixel    ${time}    ${site_id}    ${pixel_type}    ${pixelid}    ${cert}    ${retUid}    ${sessionId}    fromOutLink=${fromOutLink}    Referer=${pixel_referer}    param=${param3}     User_Agent=${useragent_list[1]}    app=${app}    sitetype=${sitetype}
 
     sleep    10
 
@@ -623,12 +651,31 @@ check_data_query_report_count_campaign_pixel_with_conversion
     ${response_content}    get_element    ${query_report_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=content    get_what=get_content
     ${content_list}    get from list    ${response_content}    0
     ${conversion}    get_element    ${content_list}    input_name=${None}    icem_name_param=${None}    icem_id_param=conversion    get_what=get_conversion
-    ${conversion_log_times}    evaluate    ${conversion_log_times}
-    should be equal    ${conversion}    ${conversion_log_times}
+    ${conversion_log_count}    evaluate    1
+    should be equal    ${conversion}    ${conversion_log_count}
 
 
-test_data_query_report_export_file
-    [Documentation]   export file
+test_data_query_report_export_file_container_tag
+    [Documentation]   export file for data query report
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${Contractor_allsite}=    get_element    ${login_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
+
+    ${query_key_1}    create list    ${query_key_1}
+    ${query_key_2}    create list    ${query_key_2}
+    ${query_key_3}    create list    ${query_key_3}
+
+    ${list}    create list    ${query_key_1}    ${query_key_2}    ${query_key_3}
+
+    ${time}=    generate_time    ${log_cost_day}
+    ${date}=    timetransfer_time_into_date    ${time}
+    ${str_date}=    transfer_date_to_string    ${date}
+
+    get_query_by_day_export_file    ${login_response}    ${SITE1}    dimensions=${list}    start_time=${str_date}    end_time=${str_date}    tag_type=0
+
+
+
+test_data_query_report_export_file_event_tag
+    [Documentation]   export file for data query report
     ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
     ${Contractor_allsite}=    get_element    ${login_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
 
@@ -643,3 +690,54 @@ test_data_query_report_export_file
     ${str_date}=    transfer_date_to_string    ${date}
 
     get_query_by_day_export_file    ${login_response}    ${SITE1}    dimensions=${list}    start_time=${str_date}    end_time=${str_date}    tag_type=1
+
+
+test_data_query_report_export_file_campaign_pixel
+    [Documentation]   export file for data query report
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${Contractor_allsite}=    get_element    ${login_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
+
+    ${query_key_1}    create list    ${query_key_1}
+    ${query_key_2}    create list    ${query_key_2}
+    ${query_key_3}    create list    ${query_key_3}
+
+    ${list}    create list    ${query_key_1}    ${query_key_2}    ${query_key_3}
+
+    ${time}=    generate_time    ${log_cost_day}
+    ${date}=    timetransfer_time_into_date    ${time}
+    ${str_date}=    transfer_date_to_string    ${date}
+
+    get_query_by_day_export_file    ${login_response}    ${SITE1}    dimensions=${list}    start_time=${str_date}    end_time=${str_date}    tag_type=2
+
+
+test_campaign_distribution
+    [Documentation]  test data query report campaign distrubution(檢查打campaign pixel log , 名字為 pixel 的總數量)
+    ${login_response}=    login    ${USER_NAME}    ${PASSWORD}    ${ROLE}
+    ${Contractor_allsite}=    get_element    ${login_response}     input_name=${None}    icem_name_param=${None}    icem_id_param=owningSiteList    get_what=get_owningSiteList
+
+    ${query_list}    create list    campaign    adgroup    ad
+
+    ${dictionary}    create dictionary    keys=${query_list}
+
+    ${list}    create list    ${dictionary}
+
+    ${time}=    generate_time    ${log_cost_day}
+    ${date}=    timetransfer_time_into_date    ${time}
+    ${str_date}=    transfer_date_to_string    ${date}
+
+    ${query_report_response}    get_query_with_dimension_filters    ${login_response}    ${SITE1}    dimensions=${list}    start_time=${str_date}    end_time=${str_date}    tag_type=2
+    ${response_content}    get_element    ${query_report_response}    input_name=${None}    icem_name_param=${None}    icem_id_param=content    get_what=get_content
+    ${content_list}    get from list    ${response_content}    0
+
+    ${conversion}    get_element    ${content_list}    input_name=${None}    icem_name_param=${None}    icem_id_param=conversion    get_what=get_conversion
+    ${conversion_log_count}    evaluate    1
+    should be equal    ${conversion}    ${conversion_log_count}
+
+    #因為在打conversion時,多打一次click所以要+1
+    ${click}    get_element    ${content_list}    input_name=${None}    icem_name_param=${None}    icem_id_param=click    get_what=get_click
+    ${click_log_times}    evaluate    ${click_log_times}+1
+    should be equal    ${click}    ${click_log_times}
+
+    ${impression}    get_element    ${content_list}    input_name=${None}    icem_name_param=${None}    icem_id_param=impression    get_what=get_impression
+    ${impression_log_times}    evaluate    ${impression_log_times}
+    should be equal    ${impression}    ${impression_log_times}
