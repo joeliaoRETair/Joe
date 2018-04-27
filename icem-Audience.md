@@ -496,4 +496,4 @@ color
 實際结果:與預期結果相同  
 
 備註： 可參考JIRA DMP-2892的圖片。  
-![image](\Images\Audience\2892.png)  
+![image](/Audience/2892.png)  
