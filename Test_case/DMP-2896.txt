@@ -1,0 +1,39 @@
+__DMP-2896 Micro site Registration page Theme name display error
+Summary:Check Micro site Registration page Theme name display
+
+Step action:
+1.進入Micro site Add page
+2.Choose Page Type:Registration Menu
+3.Drop Registraction Content 
+4.檢查Registration Element Property 的 Theme名稱是否為:Register Page以及Register Page with Weixin Camera
+
+預期結果:名稱正確
+實際結果:與預期結果相同
+
+Summary:Test Micro site Registration page Theme:Register Page
+
+Step action:
+1.進入Micro site Add page
+2.Choose Page Type:Registration Menu
+3.Drop Registraction Content 
+4.Registration Element Property 的 Theme選擇:Register Page
+5.Save and Publish
+6.檢查是否成功Save
+
+預期結果:Save成功
+實際結果:與預期結果相同
+
+
+Summary:Test Micro site Registration page Theme:Register Page with Weixin Camera
+
+Step action:
+1.進入Micro site Add page
+2.Choose Page Type:Registration Menu
+3.Drop Registraction Content 
+4.Registration Element Property 的 Theme選擇:Register Page with Weixin Camera
+5.Save and Publish
+6.檢查是否成功Save
+
+預期結果:Save成功
+實際結果:與預期結果相同
+

@@ -1,0 +1,711 @@
+﻿--------------------------- Segmentation ---------------------------
+
+包含以下測試:
+
+1.Add 繁體/简体/特殊符號 名稱的 Audience Segment
+2.Edit Audience Segment
+3.Delete Audience Segment
+4.Add 繁體/简体/特殊符號 名稱的 Segmentation Scheduler 
+5.Edit Segmentation Scheduler
+6.Delete Segmentation Scheduler
+7.Segmentation Report圖表
+8.Segmentation Schedule 的Quick Run/Scheduler功能
+9.新增6種rule做不同的組合及運算的Segment,並且確認是否運作
+10.Export file測試
+11.測試Score Rule 3個條件,分別為:score,ranking,percentage
+12.測試RFM model 2個條件,分別為:Recency,Frequency
+
+
+----------------------------------------------------------------------------------------------------------------
+
+請創一個新site,在check資料數量是否正確時會比較方便
+
+Preconditions:
+
+1.設置好Audience,Audience Attribute,Audience Taxonomy
+Audience:[member1,member2,member3]
+Audience Attribute:Gender:[Male,Female]
+Audience Taxonomy:Gender:[Male,Female]
+
+2.設置好Items
+Code:101
+Name:it1
+Price:10
+Discount Price:10
+Group:none
+Category:none
+
+3.設置好Score rule
+Score Rule Name:rule
+Score Caculation:5,Add
+Attribute:[Gender:Male,Gender:Female]
+Expression:AttributeRule0 | AttributeRule1 
+
+4.設置好Event tag/Campaign pixel
+Event tag Name:event
+Event tag ID:ON
+
+5.Need to get retUid from cassandra
+
+--------------------------- Audience Segment ---------------------------
+
+Summary:測試 Add 繁體 名稱的 Audience Segment
+
+Step action:
+1.進入Segmentation -> Audience Segment
+2.點選Add 新增 Audience Segment
+3.Audience Segment Name: 繁體
+4.勾選Taxonomy
+5.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Add 简体 名稱的 Audience Segment
+
+Step action:
+1.進入Segmentation -> Audience Segment
+2.點選Add 新增 Audience Segment
+3.Audience Segment Name: 简体
+4.勾選Taxonomy
+5.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Add 特殊符號 名稱的 Audience Segment
+
+Step action:
+1.進入Segmentation -> Audience Segment
+2.點選Add 新增 Audience Segment
+3.Audience Segment Name: !@#$%^
+4.勾選Taxonomy
+5.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Edit Audience Segment 的 Name
+
+Step action:
+1.進入Segmentation -> Audience Segment 
+2.Edit Audience Segment 的 Name
+3.Save
+
+預期結果:修改成功
+實際結果:如同預期結果
+
+
+Summary:測試 Edit Audience Segment 的 Rule
+
+Step action:
+1.進入Segmentation -> Audience Segment 
+2.Edit Audience Segment 的 Rule
+3.Save
+
+預期結果:修改成功
+實際結果:如同預期結果
+
+
+
+Summary:測試 Delete Audience Segment
+
+Step action:
+1.進入Segmentation -> Audience Segment
+2.Delete Audience Segment
+
+預期結果:刪除成功
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment 頁面Download Internal Cookie是否正常運作
+Step action:
+1.在Audience Segment頁面點選Operation的迴紋針圖示
+2. Name選擇Download Internal cookie
+3.檢查是否有成功下載檔案,並且查看是否為打入log的retUid
+
+預期結果:檔案下載成功
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment 頁面Download Member ID是否正常運作
+Step action:
+1.在Audience Segment頁面點選Operation的迴紋針圖示
+2. Name選擇Download Member ID
+3.檢查是否有成功下載檔案,並且查看是否為打入log的Member ID
+
+預期結果:檔案下載成功
+實際結果:如同預期結果
+
+
+Summary:測試 Audience Segment 頁面 Send email 是否正常運作
+
+Precondition:存在一個可以真的收到信的member
+
+1.Touch point settings -> EMail/SMS -> Add
+Name:test
+Channel Type:Email
+Mail Host:mail.retair.com
+Account:qa
+Password:retair
+2.進入Segmentation 頁面 run 可以篩出收信 member 的 segment
+3.點選迴紋針圖示,選擇Send Email,任選一個Creative
+4.收信檢查
+
+預期結果:Email發送成功
+實際結果:如同預期結果
+
+
+Summary:測試新增重複的 Audience Segment
+
+Preconditions:存在一個 Audience Segment : Segment
+
+Step actions:
+1.新增一個 Audience Segment 
+Audience Segment Name: Segment
+2.勾選Audience Taxonomy 
+3.Save
+
+預期結果:保存失敗,跳出Error訊息
+實際結果:與預期結果相同
+
+
+__ DMP-2582: UI: Support audience segment search function __
+
+目的： 測試audience segment的搜尋功能。
+
+預先設置： 設有幾個audience segment以進行搜尋。
+
+步驟： 
+    1. 進入Segmentation -> Audience Segment頁面。
+    2. 點擊AUDIENCE SEGMENT NAME左邊的搜尋鈕，輸入欲搜尋的字串，確認顯示的audience segment，是否包含搜尋的字串，
+       以及預期被搜尋出來的audience segment，是否皆有顯示出來。
+    3. 進行英文、繁中、簡中及符號的搜尋測試。
+實際結果： 皆符合預期。
+
+備註： 搜尋時若輸入底線(_)會被當作任一字元。
+PS:有分大小寫
+
+
+--------------------------- Audience Segment各種rule組合的測試 ---------------------------
+
+在新增Audience Segment 時有6種不同rule可以選擇,分別是Taxonomy,CustomField,ScoreRule,ItemCode,RFM model,Keyword
+除了Keyword的部分目前無法用打log方式讓它產生資料,其他都要先打log
+Keyword目前只能把資料硬塞進cassandra來做測試(請後端工程師幫忙),此測試的 keyword=ktest ,impression=3
+
+以及 Keyword 要先到Items新增設定:ktest
+
+-------------- 打log --------------
+
+此範例都為打(member2:Female)(item:it1) event tag 的click log
+
+PS:下面網址大括號{…}的地方換成自己site的資料
+
+CustomField的log:
+1.進入Event tag頁面-> See all snippet code
+2.輸入Custom:Custom Field:test, Custom Field Value:123
+3.點選Apply後複製網址 
+http://icemdev.retchat.com/t/?a={siteId}&{pixelType}={event id}&cert={event 的cert}&app=WEB&ext={設置的custom field,value}&retUid={user的retUid}
+
+ItemCode的log:
+1.進入Event tag頁面-> See all snippet code
+2.複製網址
+3.加入vItemId, vItemId是item code  EX:vItemId=101
+http://icemdev.retchat.com/t/?a={siteId}&{pixelType}={event id}&cert={event 的cert}&app=WEB&vItemId={Item code}&retUid={user的retUid}
+
+RFM model的log:
+1.進入Event tag頁面-> See all snippet code
+2.複製網址
+http://icemdev.retchat.com/t/?a={siteId}&{pixelType}={event id}&cert={event 的cert}&app=WEB&retUid={user的retUid}
+
+Score Rule的log: 
+1.進入Event tag頁面-> See all snippet code
+2.複製網址
+3.加入siteMember, siteMember就是member的name, EX: siteMember=member2
+http://icemdev.retchat.com/t/?a={siteId}&{pixelType}={event id}&cert={event 的cert}&app=WEB&siteMember={Audience的name}&retUid={user的retUid}
+
+----------------------------------------------------------------------------------------------------------------
+
+此時member2:
+
+Taxonomy:  Female  
+Item code:  101 click event 1次
+Custom field:  test(123) click event 1次
+RFM model :  click recency/frequency 1次
+Score rule:  score為 5分
+Keyword:  ktest 為3次
+
+PS:下面的測試主要為測試segment功能是否會幫我們篩選出我們要的member,所以rule條件以能夠篩出member2這個人為主
+equal/Not equal/less than/less equal/greater than/greater equal的次數不一定要完全跟下列一樣
+
+----------------------------------------------------------------------------------------------------------------
+
+Summary:新增各種組合Rule的Audience Segment
+
+Step action:
+1.進入Segmentation -> Audience Segment
+2.點選Add 新增 Audience Segment
+3.填入Audience Segment Name 
+4.選擇Rule後點選Save
+
+PS:Rule的選擇如下列,分別共有63個組合的Segment test
+有編號的為Segment的名稱,以及這個Segment裡有什麼rule(就是包含的rule跟要新增的Name相同的意思),在下一行的括號內是rule所選的條件,等號後面是新增完後點按Run Now的Result count
+每做完一個新增,就點選Run now,並且檢查Result count(就是下一個測試)
+
+One rule:
+1.Taxonomy_ 
+//PS2:因為每天都會跑Taxonomy的segment,所以加底線不然會重複名稱//
+(Female)=0
+2.CustomField 
+(test(123) click the campaign/event Less than 5 times ,End)=1
+3.ScoreRule
+(rule with Score Rule equal 5 ,End)=1
+4.RFMModel
+(in a Day Click the campaign/event event base on Recency ,End)=1
+5.ItemCode
+(101 Pixel click Less than 2 times ,End)=1
+6.keyword
+(ktest Greater or equal 1 times,End)=1
+
+Two rules
+7.Taxonomy + CustomField
+(Female)(test(123) click the campaign/event Less than 5 times ,End)=1
+8.Taxonomy + ScoreRule
+(Female)(rule with Score Rule equal 5 ,End)=1
+9.Taxonomy + RFMModel
+(Female) (in a Day Click the campaign/event event base on Recency ,End)=1
+10.Taxonomy + ItemCode
+(Female)(101 Pixel click Less than 2 times ,End)=1
+11.Taxonomy + keyword
+(Female)(ktest Greater or equal 1 times,End)=1
+12.CustomField + ScoreRule
+(test(123) click the campaign/event Less than 5 times ,And)(rule with Score Rule equal 5,End)=1
+13.CustomField + RFMModel
+(test(123) click the campaign/event Less than 5 times ,And)(in a Day Click the campaign/event event base on Recency ,End)=1
+14.CustomField + ItemCode
+(test(123) click the campaign/event Less than 5 times ,And)(101 Pixel click Less than 2 times ,End)=1
+15.CustomField + keyword
+(test(123) click the campaign/event Less than 5 times ,And)(ktest Greater or equal 1 times,End)=1
+16.ScoreRule + RFMModel
+(rule with Score Rule equal 5,And)(in a Day Click the campaign/event event base on Recency ,End)=1
+17.ScoreRule + ItemCode
+(rule with Score Rule equal 5,And)(101 Pixel click Less than 2 times ,End)=1
+18.ScoreRule + keyword
+(rule with Score Rule equal 5,And)(ktest Greater or equal 1 times,End)=1
+19.RFMModel + ItemCode
+(in a Day Click the campaign/event event base on Recency ,And)(101 Pixel click Less than 2 times ,End)=1
+20.RFMModel + keyword
+(in a Day Click the campaign/event event base on Recency ,And)(ktest Greater or equal 1 times,End)=1
+21.ItemCode + keyword
+(101 Pixel click Less than 2 times ,And)(ktest Greater or equal 1 times,End)=1
+
+Three rules:
+22.Taxonomy + CustomField + ScoreRule
+(Female)(test(123) click the campaign/event Less than 5 times ,Or)(rule with Score Rule equal 5,End)=1
+23.Taxonomy + CustomField + RFMModel
+(Female)(test(123) click the campaign/event Less than 5 times ,Or)(in a Day Click the campaign/event event base on Recency ,End)=1
+24.Taxonomy + CustomField + ItemCode
+(Female)(test(123) click the campaign/event Less than 5 times ,Or)(101 Pixel click Less than 2 times ,End)=1
+25.Taxonomy + CustomField + keyword
+(Female)(test(123) click the campaign/event Less than 5 times ,Or)(ktest Greater or equal 1 times,End)=1
+26.Taxonomy + ScoreRule + RFMModel
+(Female)(rule with Score Rule equal 5,Or)(in a Day Click the campaign/event event base on Recency ,End)=1
+27.Taxonomy + ScoreRule + ItemCode
+(Female)(rule with Score Rule equal 5,Or)(101 Pixel click Less than 2 times ,End)=1
+28.Taxonomy + ScoreRule + keyword 
+(Female)(rule with Score Rule equal 5,Or)(ktest Greater or equal 1 times,End) =1
+29.Taxonomy + RFMModel + ItemCode
+(Female)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+30.Taxonomy + RFMModel + keyword
+(Female)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+31.Taxonomy + ItemCode + keyword
+(Female)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+32.CustomField + ScoreRule + RFMModel
+(test(123) click the campaign/event Less than 5 times ,Or)(rule with Score Rule equal 5, Or)(in a Day Click the campaign/event event base on Recency ,End)=1
+33.CustomField + ScoreRule + ItemCode
+(test(123) click the campaign/event Less than 5 times ,Or)(rule with Score Rule equal 5, Or)(101 Pixel click Less than 2 times ,End)=1
+34.CustomField + ScoreRule + keyword
+(test(123) click the campaign/event Less than 5 times ,Or)(rule with Score Rule equal 5, Or)(ktest Greater or equal 1 times,End)=1
+35.CustomField + RFMModel + ItemCode
+(test(123) click the campaign/event Less than 5 times ,Or)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+36.CustomField + RFMModel + keyword
+(test(123) click the campaign/event Less than 5 times ,Or)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+37.CustomField + ItemCode + keyword
+(test(123) click the campaign/event Less than 5 times ,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+38.ScoreRule + RFMModel + ItemCode
+(rule with Score Rule equal 5, Or)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+39.ScoreRule + RFMModel + keyword
+(rule with Score Rule equal 5, Or)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+40.RFMModel + ItemCode + keyword
+(in a Day Click the campaign/event event base on Recency ,And)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+41.ScoreRule + ItemCode + keyword
+(rule with Score Rule equal 5, And)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+
+Four rules:
+42.Taxonomy + CustomField + ScoreRule + RFMModel
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(in a Day Click the campaign/event event base on Recency ,End)=1
+43.Taxonomy + CustomField + ScoreRule + ItemCode
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(101 Pixel click Less than 2 times ,End)=1
+44.Taxonomy + CustomField + ScoreRule + keyword
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(ktest Greater or equal 1 times,End)=1
+45.Taxonomy + CustomField + RFMModel + ItemCode
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+46.Taxonomy + CustomField + RFMModel + keyword
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+47.Taxonomy + CustomField + ItemCode + keyword
+(Female)(test(123) click the campaign/event equal 1 times ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+48.Taxonomy + ScoreRule + RFMModel + ItemCode
+(Female)(rule with Score Rule Less than 10 ,Not)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+49.Taxonomy + ScoreRule + RFMModel + keyword
+(Female)(rule with Score Rule Less than 10 ,Not)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+50.Taxonomy + ScoreRule + ItemCode + keyword
+(Female)(rule with Score Rule Less than 10 ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+51.Taxonomy + RFMModel + ItemCode + keyword
+(Female)(in a Day Click the campaign/event event base on Recency ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+52.CustomField + ScoreRule + RFMModel + ItemCode
+(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,End)=1
+53.CustomField + ScoreRule + RFMModel + keyword
+(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(in a Day Click the campaign/event event base on Recency ,Or)(ktest Greater or equal 1 times,End)=1
+54.CustomField + ScoreRule + ItemCode + keyword
+(test(123) click the campaign/event equal 1 times ,Not)(rule with Score Rule Less than 10,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+55.CustomField + RFMModel + ItemCode + keyword
+(test(123) click the campaign/event equal 1 times ,Not)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+56.ScoreRule + RFMModel + ItemCode + keyword
+(rule with Score Rule Less than 10,Not)(in a Day Click the campaign/event event base on Recency ,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+
+Five rules:
+57.Taxonomy + CustomField + ScoreRule + RFMModel + ItemCode
+(Female)(test(123) click the campaign/event Not equal 5 times ,And)(101 Pixel click Greater than 100 times ,Or)(in a Day Click the campaign/event event base on Recency ,Not)(rule with Score Rule Not equal 5,End) =1
+58.Taxonomy + CustomField + ScoreRule + RFMModel + keyword
+(Female)(test(123) click the campaign/event Not equal 5 times ,And)(rule with Score Rule Not equal 5,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+59.Taxonomy + CustomField + ScoreRule + ItemCode + keyword
+(Female)(test(123) click the campaign/event Not equal 5 times ,And)(rule with Score Rule Not equal 5,Or)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+60.Taxonomy + CustomField +  RFMModel + ItemCode + keyword
+(Female)(test(123) click the campaign/event Not equal 5 times ,And)(in a Day Click the campaign/event event base on Recency ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+61.Taxonomy +  ScoreRule + RFMModel + ItemCode + keyword
+(Female)(rule with Score Rule Not equal 5,Or) (in a Day Click the campaign/event event base on Recency ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+62.CustomField + ScoreRule + RFMModel + ItemCode + keyword
+(test(123) click the campaign/event Not equal 5 times ,And) (rule with Score Rule Not equal 5,End) (in a Day Click the campaign/event event base on Recency ,Not)(101 Pixel click Less than 2 times ,Or)(ktest Greater or equal 1 times,End)=1
+63.Taxonomy + CustomField + ScoreRule + RFMModel + ItemCode + keyword
+(Female)(test(123) click the campaign/event equal 1 times ,And) (rule with Score Rule equal 5,And) (in a Day Click the campaign/event event base on Recency ,And)(101 Pixel click equal 1 times ,And)(ktest equal 1 times,End)=1
+
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+----------------------------------------------------------------------------------------------------------------
+
+Summary:(承上一個測試)測試新增的Segment功能是否運作
+Precondition:新增完Audience Segment
+Step action:
+1.新增完後點選Segment右邊Operation的Run Now
+2.重新整理頁面並檢查點選的Segment Run Now旁邊是否有出現迴紋針圖示
+3.進入Segmentation Job Result查看是否有出現一筆記錄
+EX:HIDDEN-CustomField , (HIDDEN-加上Segment的Name)
+4.檢查result count是否正確
+
+預期結果:job執行成功並且count如預期
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment中rule做不同運算規則時segment是否成功運作
+Step action:
+1.新增一個audience segment
+2.Rule選擇4個custom field但不同運算規則 EX如下:
+Custom field:test Equals 123 click the campaign/event Equal 1 times, And
+Custom field:test Equals 123 click the campaign/event Greater than 1 times, Or
+Custom field:test Equals 123 click the campaign/event less than 10 times, Not
+Custom field:test Equals 123 click the campaign/event Not Equal 15 times, End
+3.Save後點選Run now
+4.進入job result查看result count 
+
+預期結果: count正確
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment中Rule為Score rule with Ranking是否成功運作
+PS: Ranking的算法是根據score去做排名
+1.新增一個audience segment
+2.Rule選擇Score rule  EX如下:
+Score rule rule with Ranking equal 1,End
+3.Save後點按Run now
+4.檢查job result 的result count
+
+預期結果: count正確
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment中Rule為Score rule with percentage是否成功運作
+PS:Percentage的算法是根據score去做ranking之後,用rank排名算其retUid的百分率,舉例來說:icem_member_score的資料同一個score rule有3個retUid,則ranking會有[1,2,3]名,那麼percentage就會是[0,0.333333,0.666666],而設定greater than 1 就是大於百分之1的意思,此時result count就會是2
+1.新增一個audience segment
+2.Rule選擇Score rule  EX如下:
+Score rule rule with Percentage greater than 1,End
+3.Save後點按Run now
+4.檢查job result 的result count
+
+預期結果: count正確
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment中Rule為RFM model base on Recency時是否成功運作
+1.新增一個audience segment
+2.Rule選擇RFM model  EX如下:
+RFM model in 3 Days click the campaign/event event base on Recency,End
+3.Save後點按Run now
+4.檢查job result 的result count
+
+預期結果: count正確
+實際結果:如同預期結果
+
+
+Summary:測試Audience Segment中Rule為RFM model base on Frequency時是否成功運作
+1.新增一個audience segment
+2.Rule選擇RFM model  EX如下:
+RFM model in 3 Days click the campaign/event event base on Frequency Equal 1 times,End
+3.Save後點按Run now
+4.檢查job result 的result count
+
+預期結果: count正確
+實際結果:如同預期結果
+
+
+
+--------------------------- Segmentation Report ---------------------------
+
+Summary:測試 Segmentation Report
+Step action:
+1.新增完Segment並且點按Run now
+2.進入Segmentation Report頁面查看是否有圖表
+
+預期結果:Report有圖表顯示
+實際結果:如同預期結果
+
+--------------------------- Segmentation Scheduler ---------------------------
+
+Summary:測試 Add 繁體 名稱的 Segmentation Scheduler 
+
+Step action:
+1.Add Segmentation Schedule
+Scheduler Name:繁體
+Scheduler Status:ENABLE
+Target:MEMBER_ID
+Channel:FILE
+Start Date:自行設定
+End Date:自行設定
+Day of Week:自行設定
+Hour of Day:自行設定
+2.選取Segment點選Add
+3.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Add 简体 名稱的 Segmentation Scheduler 
+
+Step action:
+1.Add Segmentation Schedule
+Scheduler Name:简体 
+Scheduler Status:ENABLE
+Target:MEMBER_ID
+Channel:FILE
+Start Date:自行設定
+End Date:自行設定
+Day of Week:自行設定
+Hour of Day:自行設定
+2.選取Segment點選Add
+3.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Add 特殊符號 名稱的 Segmentation Scheduler 
+
+Step action:
+1.Add Segmentation Schedule
+Scheduler Name:!@#$%^
+Scheduler Status:ENABLE
+Target:MEMBER_ID
+Channel:FILE
+Start Date:自行設定
+End Date:自行設定
+Day of Week:自行設定
+Hour of Day:自行設定
+2.選取Segment點選Add
+3.Save
+
+預期結果:新增成功
+實際結果:如同預期結果
+
+
+Summary:測試 Edit Segmentation Scheduler
+
+Step action:
+1.Edit Segmentation Schedule
+Scheduler Name改成:Edit_繁體
+
+預期結果:修改成功
+實際結果:如同預期結果
+
+
+Summary:測試 Delete Segmentation Scheduler
+
+Step action:
+1.Delete Segmentation Schedule
+
+預期結果:刪除成功
+實際結果:如同預期結果
+
+
+Summary:測試 Segmentation Schedule Quick Run功能
+Step action:
+1.設定好Segmentation Schedule
+2.點選Run now到job result查看是否有記錄 
+3.Download file查看
+
+預期結果:執行成功
+實際結果:如同預期結果
+
+ 
+Summary:測試 Segmentation Schedule 自動執行功能
+Step action:
+1.設定好Segmentation Scheduler
+2.等設定時間過後查看job result是否有記錄
+3.Download file查看
+
+預期結果:Scheduler執行成功
+實際結果:如同預期結果
+
+
+Summary:測試 Audience Segment inuse的情況下Delete Audience Segment
+
+Step action:
+1.新增Scheduler
+2.進入Attribute Segment頁面刪除剛剛新增Scheduler所選取的Segment
+
+預期結果:刪除失敗,跳出Segment inuse的警告訊息
+實際結果:與預期結果相同
+
+
+Summary:測試 Segmentation Schedule 的 Start Date比 End Date 日期晚是否能新增成功
+
+Step action:
+1.Add Segmentation Schedule
+Scheduler Name:Date
+Scheduler Status:ENABLE
+Target:MEMBER_ID
+Channel:FILE
+2選取Date,要先選End Date
+End Date:2018-03-23
+Start Date:2018-04-01
+Hour of Day:Seven o'clock
+2.選取Segment點選Add
+3.Save
+
+預期結果:新增失敗,跳出Error訊息
+實際結果:如同預期結果
+
+
+
+--------------------------- Segmentation Job Result ---------------------------
+
+Summary: 測試Segmentation Job Result頁面Download Internal Cookie是否正常運作
+Step action:
+1.在Job result頁面點選Operation圖示
+2.Name選擇Download Internal cookie
+3.檢查是否有成功下載檔案,並且查看是否為打入log的retUid
+
+預期結果:檔案下載成功
+實際結果:如同預期結果
+
+
+Summary: 測試Segmentation Job Result頁面Download Member ID是否正常運作
+Step action:
+1.在Job result頁面點選Operation圖示
+2.Name選擇Download Member ID
+3.檢查是否有成功下載檔案,並且查看是否為打入log的Member ID
+
+預期結果:檔案下載成功
+實際結果:如同預期結果
+
+
+Summary: 測試刪除 Audience Segment 後 Segmentation Job Result 的 job 是否會同步刪除
+Step action:
+1.在 Audience Segment頁面刪除一個 Run 過的Segment
+2.到 Segmentation Job Result 頁面檢查其job result是否同步刪除
+
+預期結果:同步刪除成功
+實際結果:如同預期結果
+
+
+___DMP-2254_針對 segment job 產生的檔案，檔案格式改為 csv
+Preconditions: 測試帳號:paul4/123qwe  site:p4site4  already exists 
+Summary: segment job 產生的檔案，檔案格式改為 csv
+Step actions:
+On-Site Events-->Segmentation-->Job Result
+{ID:321
+Operation:Download memberID
+Apply}
+
+預期結果:下載檔案為csv
+實際結果:與預期結果相同
+
+
+__DMP-2678_UI: Support job result expire day config
+
+Summary: 測試修改 job result expire days 功能是否成功work
+Step actions:
+1.到admin中修改Contractor的job result expire days天數(Default為14)
+2.Save
+PS:系統半夜更新後,隔天才能查看是否有成功更新
+3.到Contractor帳號裡的Segmentation -> Audience Segment -> job result查看是否成功更改
+
+預期結果: 剩下離最近設定天數的 job result以及每個segment至少一個 job result
+實際結果: 與預期結果相同
+
+
+__DMP-2653: Disable the taxonomy schedule while the taxonomy option list is empty
+
+目的： 測試每天自動產生的Job Result。
+
+預先設置： 
+1. 在Audience -> Audience設定具有attribute可進行分群的audience。
+2. 此測試應分為三種狀況。在Audience -> Audience Taxonomy頁面進行設定：
+  I. 不設定任何taxonomy。
+  II. 設定第一層taxonomy，但不設定option。
+  III. 設定具有option的taxonomy，也就是實際可進行segment的taxonomy。
+
+步驟： 
+1. 在進行上述設定後，於隔天至Segmentation -> Segmentation Job Result頁面進行確認：
+  I及II： 不應產生HIDDEN-Taxonomy的job result。
+  III： 應產生HIDDEN-Taxonomy。
+
+實際結果： 如同預期。
+
+備註： 此測試可利用3個不同的site作3個不同的設定來進行測試，以減少所需時間。
+
+
+__DMP-2749_Segmentation_無法下載結果
+
+Summary:測試Segmentation Job Result Export file功能是否成功運作
+Precondition:存在Audience Segment
+Action step:
+1.進入Audience Segment頁面點選右邊Operation的Run Now 
+2.進入Segmentation job result頁面點選右邊的Operation
+3.Name選擇Download Internal Cookie點選Apply
+4.查看是否有下載檔案成功
+
+預期結果:下載成功
+實際結果:如同預期結果
+
+
+
+
+
+
+
+

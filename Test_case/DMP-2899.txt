@@ -1,0 +1,37 @@
+DMP-2899 Support multiple key-values in business report  DMP-2742UI - business report
+Preconditions:
+1.在taxonomy建立好Attribute
+如:"興趣":{"跑步","看書","看電影","逛街","吃美食","籃球","排球"}
+2.將這個Attribute的isMultiple設定為true(目前只能用API來做設定)
+PS:要等待晚上跑過Segment才能做測試
+
+Summary:測試Attribute isMultiple為true時,勾選1個attributes是否正常運作
+Step action:
+1.進入Business report頁面,打開Network Monitor,選取Date後Apply
+2.勾選1個Attribute
+3.檢查圖表有無正確顯示
+4.查看network monitor檢查呼叫 api/report/business 這個API的URL response是否與顯示的資料相同
+
+預期結果:成功顯示,並且資料正確
+實際結果:與預期結果相同
+
+Summary:測試Attribute isMultiple為true時,勾選2個相同tag name的attributes是否正常運作
+Step action:
+1.進入Business report頁面,打開Network Monitor,選取Date後Apply
+2.勾選2個相同tag name的Attribute
+3.檢查有無跳出錯誤顯示圖表有無正確顯示
+4.查看network monitor檢查呼叫 api/report/business 這個API的URL response是否與顯示的資料相同
+
+預期結果:成功顯示,並且資料正確
+實際結果:與預期結果相同
+
+Summary:測試Attribute isMultiple為true時,勾選3個相同tag name的attributes是否正常運作
+Step action:
+1.進入Business report頁面,打開Network Monitor,選取Date後Apply
+2.勾選3個相同tag name的Attribute
+3.檢查圖表有無正確顯示
+4.查看network monitor檢查呼叫 api/report/business 這個API的URL response是否與顯示的資料相同
+
+預期結果:成功顯示,並且資料正確
+實際結果:與預期結果相同
+

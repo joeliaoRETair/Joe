@@ -1,0 +1,19 @@
+__DMP-2880 UI: Support Job Result with DSP selection under PUBLISH action
+
+Summary:Check Segmentation Job result PUBLISH operation DSP selection
+Step action:
+1.進入 Segmentation Job Result 頁面,點選 operation
+2.Name 選擇 Publish
+3.檢查下方是否有跳出input區塊,並且旁邊出現可選擇Target type的selection區塊
+
+預期結果:有selection區塊出現
+實際結果:與預期結果相同
+
+Suumary:Check Audience Segment PUBLISH operation
+Step action:
+1.進入 Audience Segment 頁面,點選 operation 的迴紋針圖示
+2.Name 選擇 Publish
+3.檢查下方是否有跳出input區塊,並且旁邊出現可選擇Target type的selection區塊
+
+預期結果:有selection區塊出現
+實際結果:與預期結果相同

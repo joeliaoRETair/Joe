@@ -1,0 +1,83 @@
+__DMP-2888 Segmentation Job Result DOWNLOAD option target type name bug
+
+Suumary:檢查 Segmentation Job Result DOWNLOAD option target type name
+Step action:
+1.進入 Segmentation Job Result 頁面
+2.點選option,Name選擇Download
+3.打開Target type檢查是否有4種target type
+分別為:ADS Cookie, Internal Cookie, Member ID, Device ID
+
+預期結果:有4種target type
+實際結果:與預期結果相同
+
+Summary:測試Segmentation Job Result DOWNLOAD ADS Cookie是否成功
+Step action:
+1.進入 Segmentation Job Result 頁面 打開Network Monitor
+2.點開Option, Name 選擇 Download, Target Type 選擇 ADS Cookie 後 Save
+3.檢查 api/segment/job/action的status code以及response的actionTargetType是否為ADS_COOKIE
+
+預測結果:Status code 為 200 以及 response 正確
+實際結果:與預測結果相同
+
+Summary:測試Segmentation Job Result DOWNLOAD Device ID是否成功
+Step action:
+1.進入 Segmentation Job Result 頁面 打開Network Monitor
+2.點開Option, Name 選擇 Download, Target Type 選擇 Device ID 後 Save
+3.檢查 api/segment/job/action的status code以及response的actionTargetType是否為DEVICE_ID
+
+預測結果:Status code 為 200 以及 response 正確
+實際結果:與預測結果相同
+
+Summary:測試Segmentation Job Result DOWNLOAD Member ID是否成功
+Step action:
+1.進入 Segmentation Job Result 頁面
+2.點開Option, Name 選擇 Download, Target Type 選擇 Member ID 後 Save
+3.檢查有無下載成功,並且打開檢查檔案內含 Member ID
+
+預測結果:下載成功並且資料正確
+實際結果:與預測結果相同
+
+Summary:測試Segmentation Job Result DOWNLOAD Internal Cookie是否成功
+Step action:
+1.進入 Segmentation Job Result 頁面
+2.點開Option, Name 選擇 Download, Target Type 選擇 Internal Cookie 後 Save
+3.檢查有無下載成功,並且打開檢查檔案內含 Internal Cookie
+
+預測結果:下載成功並且資料正確
+實際結果:與預測結果相同
+
+Summary:測試Audience segment DOWNLOAD ADS Cookie是否成功
+Step action:
+1.進入 Audience segment 頁面 打開Network Monitor
+2.點開Option迴紋針圖示, Name 選擇 Download, Target Type 選擇 ADS Cookie 後 Save
+3.檢查 api/segment/job/action的status code以及response的actionTargetType是否為ADS_COOKIE
+
+預測結果:Status code 為 200 以及 response 正確
+實際結果:與預測結果相同
+
+Summary:測試Audience segment DOWNLOAD Device ID是否成功
+Step action:
+1.進入 Audience segment 頁面 打開Network Monitor
+2.點開Option迴紋針圖示, Name 選擇 Download, Target Type 選擇 Device ID 後 Save
+3.檢查 api/segment/job/action的status code以及response的actionTargetType是否為DEVICE_ID
+
+預測結果:Status code 為 200 以及 response 正確
+實際結果:與預測結果相同
+
+Summary:測試Audience segment DOWNLOAD Member ID是否成功
+Step action:
+1.進入 Audience segment 頁面
+2.點開Option迴紋針圖示, Name 選擇 Download, Target Type 選擇 Member ID 後 Save
+3.檢查有無下載成功,並且打開檢查檔案內含 Member ID
+
+預測結果:下載成功並且資料正確
+實際結果:與預測結果相同
+
+Summary:測試Audience segment DOWNLOAD Internal Cookie是否成功
+Step action:
+1.進入 Audience segment 頁面
+2.點開Option迴紋針圖示, Name 選擇 Download, Target Type 選擇 Internal Cookie 後 Save
+3.檢查有無下載成功,並且打開檢查檔案內含 Internal Cookie
+
+預測結果:下載成功並且資料正確
+實際結果:與預測結果相同

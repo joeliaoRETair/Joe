@@ -1,0 +1,76 @@
+﻿DMP-2856 [Report] Get the audience segment result from DMP database
+
+Summary:測試Business report跟target sync data所設定的database連線是否成功
+Step action:
+1.設定Target Sync Data:
+{
+  Data Type: BEHAVIOR
+  Data Source Type: POSTGRESQL
+  Status: OFF
+  Host: danone.retchat.com
+  Port: 5432
+  User Name: gpadmin  
+  Password: DN65$321
+  Data base: danone
+  Schema: behavior
+}
+2.設定Audience Taxonomy:
+{
+  Demographic-Age [25-44,20-39]
+  Demographic-Gender [M,F]
+  Demographic-Location [CN,HK]
+  Interested_In_Parenting [1,0]
+  Parental_Status-Pregnant [1,0]
+  Parenting-Brain_Development [1,0]
+  Parenting-Easy_Digestion [1,0]
+  Parenting-Future_Health [1,0]
+}
+3.到Audience report頁面的Business report 選取 Date並且Apply
+
+預期結果:成功跑出圖表
+實際結果:與預期結果相同
+
+
+Summary:(承上測試)測試Business report的Date limit是否為31天
+Step action:
+1.進入Business report,選擇Date 
+2.選取Custom超過31天的設定
+3.檢查是否能成功設定超過31天
+
+預期結果:設定失敗,date自動選取範圍31天
+實際結果:與預期結果相同
+
+
+Summary:(承上測試)測試Business report跟圖表顯示是否正確
+Step action:
+1.選完Date後,點選Apply
+2.跑出圖表以後,檢查圖表對應的ATTRIBUTE以及Num OF AUDIENCE是否正確
+
+預期結果:圖表對應資料正確
+實際結果:與預期結果相同
+
+
+Summary:(承上測試)測試Business report勾選兩個以上相同Tag Name的Attribute時是否會跳出錯誤訊息
+Step action:
+1.進入Business report,選完Date後點選Apply
+2.跑出圖表以後,勾選兩個相同Tag Name的Attribute
+3.檢查是否有跳出 Error 訊息
+
+預期結果:成功跳出Error訊息
+實際結果:與預期結果相同
+
+
+Summary:(承上測試)測試Business report選取的Attribute最多是否只有3個
+Step action:
+1.進入Business report,選擇Date點選Apply
+2.選擇3個不同tag name的Attribute
+EX:ATTRIBUTE/TAG NAME:[1/Interested_In_Parenting,20-39/Demographic-Age,M/Demographic-Gender]
+3.選擇第4個Attribute
+EX:CN/Demographic-Location
+4.檢查Attribute是否為3個Attribute(包含CN/Demographic-Location)
+
+	
+預期結果:最多只有3個Attribute
+實際結果:與預期結果相同
+
+

@@ -1,0 +1,19 @@
+__DMP-2874 Basic mechanism of multiple DSP support
+Summary:Check API:segment/job/actionMap work or not in Segmentation Job result page
+
+Step action:
+1.打開Network Monitor
+2.進入Segmentation Job result
+3.檢查有沒有呼叫 api/segment/job/actionMap 這個API 並且Status code為200 OK
+4.檢查response是否為:
+{"success":true,"code":"","message":"ok",
+ "data":{
+	"DSP":["ADS_COOKIE"],
+	"FILE":["ADS_COOKIE","INTERNAL_COOKIE","MEMBER_ID","DEVICE_ID","WECHAT_ID"],
+	"MAIL":["MEMBER_ID"],
+	"SMS":["MEMBER_ID"],
+	"EVENT":["INTERNAL_COOKIE"]
+	}
+}
+預期結果:response正確
+實際結果:與預期結果相同

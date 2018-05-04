@@ -1,0 +1,63 @@
+__DMP-2902 Business report select multiple options error
+Summary:Test choose one Attribute in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選1個Attribute
+3.檢查有沒有跳出Error Message,以及檢查Business Report-Label Overlapped有無出現圖表
+
+預期結果:沒有跳出Error Message,圖表成功出現
+實際結果:與預期結果相同
+
+Summary:Test choose two Attribute with different tag name in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選2個不同Tag Name的Attribute
+3.檢查有沒有跳出Error Message,以及檢查Business Report-Label Overlapped有無出現圖表
+
+預期結果:沒有跳出Error Message,圖表成功出現
+實際結果:與預期結果相同
+
+Summary:Test choose three Attribute with different tag name in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選3個不同Tag Name的Attribute
+3.檢查有沒有跳出Error Message,以及檢查Business Report-Label Overlapped有無出現圖表
+
+預期結果:沒有跳出Error Message,圖表成功出現
+實際結果:與預期結果相同 
+
+
+Summary:Test choose two Attribute with the same Tag Name in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選2個相同Tag Name的Attribute
+3.檢查有沒有跳出Error Message: Cannot select multiple options in the same tag
+
+預期結果:跳出Error Message
+實際結果:與預期結果相同
+
+
+Summary:Test choose three Attribute with the same Tag Name in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選3個相同Tag Name的Attribute
+3.檢查有沒有跳出Error Message: Cannot select multiple options in the same tag
+
+預期結果:跳出Error Message
+實際結果:與預期結果相同
+
+Summary:Test limit Attribute choice is 3 or not in Business Report
+
+Step action:
+1.進入Business report頁面
+2.選好Date後,勾選3個不同Tag Name的Attribute
+3.再勾選第4個不同Tag Name的Attribute
+4.檢查是否自動取消勾選第2步驟的其中一個Attribute,並且勾選第4個Attribute
+
+預期結果:Attribute最多為3個
+實際結果:與預期結果相同
