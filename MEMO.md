@@ -93,6 +93,11 @@ Ex:打入的ext:麥當勞(大麥克),filter就要新增”麥當勞”
 -> Cassandra 的 dmp_user_profile, dmp_user_profile_segment … 等table
 
 
+## __Macro 打 log 新增 Audience 的 Attribute__
+log範例: 
+http://icemdev.retchat.com/p/?a=1720&catclk=18-11605781419&cert=c0ae88123e7a142a1d5216d6bb173c85&app=WEB&retUid=MANUAL-26b3464e-c1f8-4f74-b18f-8ffce869c374&ckType=12&interest=shopping  
+只能打系統預設好的macro name , 到 icem_dsp_macro 看
+
 # __Robot framework memo__
 
 >Robot framework 提取 list 中的 list  
@@ -111,3 +116,4 @@ ${content_list}&emsp;get from list&emsp;${response_content}&emsp;0
 ${conversion}&emsp;get_element&emsp;${content_list}&emsp;input_name=${None}&emsp;icem_name_param=${None}&emsp;icem_id_param=conversion&emsp;get_what=get_conversion  
 <font color="yellow">__變成數字__</font>  
 ${conversion_log_times}&emsp;evaluate&emsp;${conversion_log_times}&emsp;should be equal&emsp;${conversion}&emsp;${conversion_log_times}
+

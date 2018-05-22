@@ -1,0 +1,36 @@
+Add test case:
+Recommendation Item Analytics:
+* pagination
+* search
+* sort by itemCode,desc
+* sort by itemCode,asc
+* sort by impression,desc
+* sort by impression,asc
+* sort by click,desc
+* sort by click,asc
+* search and pagination
+* sort by itemCode,desc and pagination
+* sort by itemCode,asc and pagination
+* sort by impression,desc and pagination
+* sort by impression,asc and pagination
+* sort by click,desc and pagination
+* sort by click,asc and pagination
+
+Inbound Item Analytics:
+* pagination
+* search
+* sort by itemCode,desc
+* sort by itemCode,asc
+* sort by impression,desc
+* sort by impression,asc
+* sort by click,desc
+* sort by click,asc
+* search and pagination
+* sort by itemCode,desc and pagination
+* sort by itemCode,asc and pagination
+* sort by impression,desc and pagination
+* sort by impression,asc and pagination
+* sort by click,desc and pagination
+* sort by click,asc and pagination
+
+

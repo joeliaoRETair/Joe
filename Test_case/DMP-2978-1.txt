@@ -1,0 +1,1256 @@
+﻿Test operator : Less than
+{code}
+Parameter : 
+{
+  "operator": "LESS_THAN",
+  "optionName": "under_18",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+          "retUid": "UPLOAD-65b6afce-12ee-430a-a2ca-5f56a0b60332",
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "不喝酒",
+            "attributeOptionName": "不喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "17",
+            "attributeOptionName": "under_18",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+
+Test operator : Less equal
+{code}
+Parameter : 
+{
+  "operator": "LESS_OR_EQUAL",
+  "optionName": "under_equal_18",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-65b6afce-12ee-430a-a2ca-5f56a0b60332",
+        "member": {
+          "memberId": 1309030,
+          "name": "s6",
+          "phoneNumber": "978455156",
+          "email": "jg@mail.com",
+          "accountName": "w6",
+          "availablePoints": 205,
+          "allPoints": 205,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+	"memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "不喝酒",
+            "attributeOptionName": "不喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "17",
+            "attributeOptionName": "under_18",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 3,
+    "last": true,
+    "numberOfElements": 3,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test operator : Between
+{code}
+Parameter : 
+{
+  "operator": "BETWEEN",
+  "optionName": "19_50",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-58f6b4a2-3878-4918-a075-110c47160d8d",
+        "member": {
+          "memberId": 1309027,
+          "name": "s3",
+          "phoneNumber": "978455153",
+          "email": "jg@mail.com",
+          "accountName": "w3",
+          "availablePoints": 202,
+          "allPoints": 202,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "50",
+            "attributeOptionName": "19_50",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test operator : Greater equal
+{code}
+Parameter : 
+{
+  "operator": "GREATER_OR_EQUAL",
+  "optionName": "51_plus_equal",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-549ec7f9-765b-4367-a970-de6491e3c9a3",
+        "member": {
+          "memberId": 1309025,
+          "name": "s1",
+          "phoneNumber": "978455151",
+          "email": "jg@mail.com",
+          "accountName": "w1",
+          "availablePoints": 200,
+          "allPoints": 200,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "52",
+            "attributeOptionName": "51_plus",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test operator : Greater than
+{code}
+Parameter : 
+{
+  "operator": "GREATER_THAN",
+  "optionName": "51_plus",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-549ec7f9-765b-4367-a970-de6491e3c9a3",
+        "member": {
+          "memberId": 1309025,
+          "name": "s1",
+          "phoneNumber": "978455151",
+          "email": "jg@mail.com",
+          "accountName": "w1",
+          "availablePoints": 200,
+          "allPoints": 200,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "52",
+            "attributeOptionName": "51_plus",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 1,
+    "last": true,
+    "numberOfElements": 1,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test operator : Not equal
+{code}
+Parameter : 
+{
+  "operator": "NOT_EQUAL",
+  "optionName": "不喝酒",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-65b6afce-12ee-430a-a2ca-5f56a0b60332",
+        "member": {
+          "memberId": 1309030,
+          "name": "s6",
+          "phoneNumber": "978455156",
+          "email": "jg@mail.com",
+          "accountName": "w6",
+          "availablePoints": 205,
+          "allPoints": 205,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "不喝酒",
+            "attributeOptionName": "不喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "17",
+            "attributeOptionName": "under_18",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 3,
+    "last": true,
+    "numberOfElements": 3,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test operator : Equal
+{code}
+Parameter : 
+{
+  "operator": "EQUAL",
+  "optionName": "喝酒",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-58f6b4a2-3878-4918-a075-110c47160d8d",
+        "member": {
+          "memberId": 1309027,
+          "name": "s3",
+          "phoneNumber": "978455153",
+          "email": "jg@mail.com",
+          "accountName": "w3",
+          "availablePoints": 202,
+          "allPoints": 202,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "50",
+            "attributeOptionName": "19_50",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },....
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 20,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 4,
+    "last": true,
+    "numberOfElements": 4,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 20,
+    "number": 0
+  }
+}
+{code}
+Test Pagination : 
+Path : /report/audienceListByAttributes?siteId=1718&page=0&size=100
+{code}
+Parameter : 
+{
+  "operator": "EQUAL",
+  "optionName": "喝酒",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-58f6b4a2-3878-4918-a075-110c47160d8d",
+        "member": {
+          "memberId": 1309027,
+          "name": "s3",
+          "phoneNumber": "978455153",
+          "email": "jg@mail.com",
+          "accountName": "w3",
+          "availablePoints": 202,
+          "allPoints": 202,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "50",
+            "attributeOptionName": "19_50",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },
+      {
+        "retUid": "UPLOAD-549ec7f9-765b-4367-a970-de6491e3c9a3",
+        "member": {
+          "memberId": 1309025,
+          "name": "s1",
+          "phoneNumber": "978455151",
+          "email": "jg@mail.com",
+          "accountName": "w1",
+          "availablePoints": 200,
+          "allPoints": 200,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "52",
+            "attributeOptionName": "51_plus",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },
+      {
+        "retUid": "UPLOAD-30353f86-bce8-4567-86fc-442beb124d17",
+        "member": {
+          "memberId": 1309026,
+          "name": "s2",
+          "phoneNumber": "978455152",
+          "email": "jg@mail.com",
+          "accountName": "w2",
+          "availablePoints": 201,
+          "allPoints": 201,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "51",
+            "attributeOptionName": "51_plus_equal",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },
+      {
+        "retUid": "UPLOAD-87804f55-2c1c-4e19-9f61-09dc5332d9bd",
+        "member": {
+          "memberId": 1309031,
+          "name": "s7",
+          "phoneNumber": "978455157",
+          "email": "jg@mail.com",
+          "accountName": "w7",
+          "availablePoints": 206,
+          "allPoints": 206,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "18",
+            "attributeOptionName": "under_equal_18",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 100,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 1,
+    "totalElements": 4,
+    "last": true,
+    "numberOfElements": 4,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 100,
+    "number": 0
+  }
+}
+{code}
+Path : /report/audienceListByAttributes?siteId=1718&page=0&size=2
+{code}
+Parameter : 
+{
+  "operator": "EQUAL",
+  "optionName": "喝酒",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-58f6b4a2-3878-4918-a075-110c47160d8d",
+        "member": {
+          "memberId": 1309027,
+          "name": "s3",
+          "phoneNumber": "978455153",
+          "email": "jg@mail.com",
+          "accountName": "w3",
+          "availablePoints": 202,
+          "allPoints": 202,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "50",
+            "attributeOptionName": "19_50",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },
+      {
+        "retUid": "UPLOAD-549ec7f9-765b-4367-a970-de6491e3c9a3",
+        "member": {
+          "memberId": 1309025,
+          "name": "s1",
+          "phoneNumber": "978455151",
+          "email": "jg@mail.com",
+          "accountName": "w1",
+          "availablePoints": 200,
+          "allPoints": 200,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "52",
+            "attributeOptionName": "51_plus",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 0,
+      "pageSize": 2,
+      "offset": 0,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 2,
+    "totalElements": 4,
+    "last": false,
+    "numberOfElements": 2,
+    "first": true,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 2,
+    "number": 0
+  }
+}
+{code}
+Path : /report/audienceListByAttributes?siteId=1718&page=1&size=2
+{code}
+Parameter : 
+{
+  "operator": "EQUAL",
+  "optionName": "喝酒",
+  "segmentId": 10048
+}
+{code}
+{code}
+Response :
+{
+  "success": true,
+  "code": "",
+  "message": "ok",
+  "data": {
+    "content": [
+      {
+        "retUid": "UPLOAD-30353f86-bce8-4567-86fc-442beb124d17",
+        "member": {
+          "memberId": 1309026,
+          "name": "s2",
+          "phoneNumber": "978455152",
+          "email": "jg@mail.com",
+          "accountName": "w2",
+          "availablePoints": 201,
+          "allPoints": 201,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "51",
+            "attributeOptionName": "51_plus_equal",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      },
+      {
+        "retUid": "UPLOAD-87804f55-2c1c-4e19-9f61-09dc5332d9bd",
+        "member": {
+          "memberId": 1309031,
+          "name": "s7",
+          "phoneNumber": "978455157",
+          "email": "jg@mail.com",
+          "accountName": "w7",
+          "availablePoints": 206,
+          "allPoints": 206,
+          "openId": null,
+          "wechatId": null,
+          "headimgurl": null,
+          "memberEnable": true,
+          "userId": null,
+          "visit": null,
+          "pageView": null,
+          "visitInterval": null,
+          "visitIntervalDays": null,
+          "firstVisited": null,
+          "lastVisited": null,
+          "lastAccessed": null,
+          "lastReferringType": null,
+          "lastReferringSite": null,
+          "lastReferringPage": null,
+          "landingKeyword": null,
+          "landingSite": null,
+          "landingPage": null,
+          "data": null,
+          "otherAttributes": null,
+          "scores": [],
+          "attributes": [],
+          "histories": [],
+          "recommendItems": [],
+          "cart": [],
+          "customerValues": []
+        },
+        "memberCustomAttrVOs": [
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "喝酒",
+            "attributeOptionName": "喝酒",
+            "attributeName": "嗜好",
+            "attributeType": "NORMAL"
+          },
+          {
+            "customAttributeId": null,
+            "valueOptionId": null,
+            "attributeValue": "18",
+            "attributeOptionName": "under_equal_18",
+            "attributeName": "年紀",
+            "attributeType": "NORMAL"
+          }
+        ]
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": true,
+        "sorted": false
+      },
+      "pageNumber": 1,
+      "pageSize": 2,
+      "offset": 2,
+      "unpaged": false,
+      "paged": true
+    },
+    "totalPages": 2,
+    "totalElements": 4,
+    "last": true,
+    "numberOfElements": 2,
+    "first": false,
+    "sort": {
+      "unsorted": true,
+      "sorted": false
+    },
+    "size": 2,
+    "number": 1
+  }
+}
+{code}
+
+Test Send error segmentId : 
+{code}
+Parameter : 
+{
+  "operator": "EQUAL",
+  "optionName": "123",
+  "segmentId": 123
+}
+{code}
+{code}
+Response :
+{
+  "success": false,
+  "code": "error.illegal_segment_id",
+  "message": "error.illegal_segment_id",
+  "data": null
+}
+{code}
