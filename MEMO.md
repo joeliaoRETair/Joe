@@ -5,6 +5,19 @@
 
 ## __Cassandra__
 
+## 連接cassadra看table資料
+帳號:root  
+密碼:retair9999  
+cd /usr/local/apache-cassandra/bin  
+./cqlsh  
+use icem;  
+![cassandra](image/cassandra.png)
+
+## 看log有沒有打進去  
+cd /data/nginx  
+tail access-action.log
+
+
 >有些 table 是 counter table 必須要用 update 指令去累加  
 Insert 則是直接設定數字
 
@@ -67,6 +80,12 @@ WHERE siteid=1668 and retuid='MANUAL-6bea140c-5273-4856-9b39-af9003f18b05' and k
 click的retType=retClk  
 需要到Items中找出Forum ID!  
 http://icemdev.retchat.com/action/action.img?t=1517886742877&retUid=ec0affda-7e3a-4040-8376-705d2675b096&siteId=1208&app=WEB&sessionId=fSes-63d1b0fd-33c9-90d2-31ed&retType=track&retCrt=c54c1040d15d563cad59e94d14bfa256&&fid={ForumID}
+## __Content Analytics -> Title Based Analytics__
+>Impression:  
+http://icemdev.retchat.com/action/action.img?t=1527498697207&retUid=1f1c4536-0616-40dc-9213-df29bfc26f76&siteId=1841&app=WEB&sessionId=fSes-6ed9b0f4-e8e2-231e-3079&retType=track&retCrt=9704a410871b809e50d196cd82b12cad&vItemId=002&recDomId=rec_reminder1&recommendId=9716&tid=9527
+
+>click不知道是怎樣打
+
 
 ## __Event DIY Label Report__
 >需要到Event tag的EXT Filter設置打入log的ext才會跑出資料  
