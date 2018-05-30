@@ -30,7 +30,15 @@ WHERE siteid=1668 and retuid='MANUAL-6bea140c-5273-4856-9b39-af9003f18b05' and k
 ## __Recommendation__
 
 
+## __Social Media__
 
+set cookie
+
+RET.cookieObj.setLocalCookie("wx2db92c8137ccdcd3__wopenid", "oNUgCsziFnuwCkW0LcYfUfO84vfo", 365 );
+RET.cookieObj.setLocalCookie("__retuid", "2f712d1d-114a-933b-48fe-cdf1bbb41a", 365 );	
+RET.cookieObj.setLocalCookie("joeliao_account", "Please", 365 );
+RET.cookieObj.setLocalCookie("isLoginjoeliao_account", "1",365 );
+RET.cookieObj.setLocalCookie("siteMember-1476", "Please", 365 );
 
 
 ## __Audience segment__

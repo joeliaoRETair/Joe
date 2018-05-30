@@ -1,0 +1,42 @@
+﻿/*** 在電腦上模擬 retclub 行為，必須設定對應的 cookie，用 container tag 提供的 RET.cookieObj.setLocalCookie() ***/
+
+// 1. 設定 wechat openid，前面 wx2db92c8137ccdcd3 是公眾號的 app id，value 從 cookiesync 表找到自己的 openid
+// 對cassandra 執行 select * from icem.report_realtime_cookiesync_retuid where siteid=1643 AND retuid='7c71a07e-7400-4bd-44cb-9bb56da75fd2--1520247094708' allow filtering;
+//
+RET.cookieObj.setLocalCookie("wx2db92c8137ccdcd3__wopenid", "oNUgCs51L1xzJ1XODDl0zw_IYwkU", 365 );
+
+// 2. 設定 retuid，value 從 cookiesync 表找到自己的 retuid
+//
+RET.cookieObj.setLocalCookie("__retuid", "366997f8-c6cc-741d-3574-df4fd7fb9c77", 365 );	
+
+// 3. 看網頁上的 var retchatAccount，在這裡是 wwei_account
+//
+RET.cookieObj.setLocalCookie("wwei_account", "ralph", 365 );
+
+// 4. cookie 名稱是 "isLogin" + retchatAccount，value 都是1
+//
+RET.cookieObj.setLocalCookie("isLoginwwei_account", "1",365 );
+
+// 5."siteMember-" + site_id，value是會員註冊的account name
+//
+RET.cookieObj.setLocalCookie("siteMember-254", "ralph", 365 );
+
+
+
+select * from report_realtime_cookiesync_retuid where siteid=1941 allow filtering;
+
+select * from icem.report_realtime_cookiesync_retuid where siteid=1898 AND retuid='d33dd927-e9a4-4e5e-bb36-64af853ff824--1527236365396' allow filtering;
+
+RET.cookieObj.setLocalCookie("wx2db92c8137ccdcd3__wopenid", "oNUgCs5XNjYhrEXPvS7Vo3JLnPZQ", 1 );
+RET.cookieObj.setLocalCookie("__retuid", "d33dd927-e9a4-4e5e-bb36-64af853ff824--1527236365396", 1 );	
+RET.cookieObj.setLocalCookie("eguo_account", "QQ", 365 );
+RET.cookieObj.setLocalCookie("isLoginsmarthealth_account", "1",365 );
+RET.cookieObj.setLocalCookie("siteMember-1941","1",365 );                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ", 365 );
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+
+
+
+
+
+
