@@ -16,6 +16,11 @@ use icem;
 ## 看log有沒有打進去  
 cd /data/nginx  
 tail access-action.log
+tail -f 檔案名 可以即時監控
+
+ICEM中做任何動作都可以在這邊找到log
+/root/DMP/apache-tomcat-8.0.33/logs
+log 在 agent.log
 
 
 >有些 table 是 counter table 必須要用 update 指令去累加  
@@ -32,7 +37,7 @@ WHERE siteid=1668 and retuid='MANUAL-6bea140c-5273-4856-9b39-af9003f18b05' and k
 
 ## __Social Media__
 
-set cookie
+set cookie on PC to test weixin
 
 RET.cookieObj.setLocalCookie("wx2db92c8137ccdcd3__wopenid", "oNUgCsziFnuwCkW0LcYfUfO84vfo", 365 );
 RET.cookieObj.setLocalCookie("__retuid", "2f712d1d-114a-933b-48fe-cdf1bbb41a", 365 );	
