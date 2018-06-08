@@ -3,6 +3,10 @@
 ## __ICEM 的 Domain name__
 >Domain name: http://icem.retair.com/icem-manager/index.html#!/
 
+impression的意義在於:"曝光",消費者有沒有看到這項產品
+click的意義在於:看見曝光後是否有點進商品
+conversion意義在於:消費者有沒有購買 放入購物車...比較重要的一些行為
+
 ## __Cassandra__
 
 ## 連接cassadra看table資料
@@ -45,6 +49,20 @@ RET.cookieObj.setLocalCookie("joeliao_account", "Please", 365 );
 RET.cookieObj.setLocalCookie("isLoginjoeliao_account", "1",365 );
 RET.cookieObj.setLocalCookie("siteMember-1476", "Please", 365 );
 
+### Delete cookie
+在不同應用程式上有不同的cookie,就像不同瀏覽器那樣,事實上就是每個應用程式有自己獨立的瀏覽器
+deleteca :  登入这个，清除手机上的cookie
+http://icemdev.retchat.com/demo/deleteCache.html?test=123123
+
+showcache : 展示当前手机上的cookie
+http://icemdev.retchat.com/demo/showCache.html
+
+在 retclub上的(線上環境) :
+deleteca :
+http://retclub.retchat.com/retclub/2/0/92
+
+showcache :
+http://retclub.retchat.com/retclub/2/0/91
 
 ## __Audience segment__
 >Audience segment 有6種 rule  
@@ -149,3 +167,10 @@ ${conversion}&emsp;get_element&emsp;${content_list}&emsp;input_name=${None}&emsp
 <font color="yellow">__變成數字__</font>  
 ${conversion_log_times}&emsp;evaluate&emsp;${conversion_log_times}&emsp;should be equal&emsp;${conversion}&emsp;${conversion_log_times}
 
+test
+    [Documentation]  open browser chrome and go to ICEM login
+    Open Browser    http://icem.retair.com/icem-manager/index.html#!/    Chrome
+    sleep    5
+    Input Text    //input[@ng-model="user.loginId"]    joeliao
+    Input Text    //input[@ng-model="user.password"]    retair
+    Click Button    //button[@ng-disabled="loginButton"]
