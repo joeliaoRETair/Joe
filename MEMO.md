@@ -9,7 +9,10 @@ conversion意義在於:消費者有沒有購買 放入購物車...比較重要�
 
 ## __Cassandra__
 
-## 連接cassadra看table資料
+### Cassandra變色!  
+source ~/tmp/bashrc
+
+### 連接cassadra看table資料
 帳號:root  
 密碼:retair9999  
 cd /usr/local/apache-cassandra/bin  
@@ -17,7 +20,7 @@ cd /usr/local/apache-cassandra/bin
 use icem;  
 ![cassandra](image/cassandra.png)
 
-## 看log有沒有打進去  
+### 看log有沒有打進去  
 cd /data/nginx  
 tail access-action.log
 tail -f 檔案名 可以即時監控
@@ -30,15 +33,13 @@ log 在 agent.log
 >有些 table 是 counter table 必須要用 update 指令去累加  
 Insert 則是直接設定數字
 
-塞資料進cassandra (keyword)
->UPDATE recommend_keyword_member_aggregate_counter  
-SET impressionnum=impressionnum+1  
-WHERE siteid=1668 and retuid='MANUAL-6bea140c-5273-4856-9b39-af9003f18b05' and keyword='ktest';
 
 
 ## __Recommendation__
-
-
+Recommendation中,visit的推薦是針對item的visit次數做推薦
+e.g. visit設定 click count < 15,則在 cassandra 中 recommend_member_aggregate_counter ,  
+在推薦的item list中,當某個 retuid 的 clkitem 的 clknum < 15時 就會被推薦出來
+ 
 ## __Social Media__
 
 set cookie on PC to test weixin
@@ -65,7 +66,8 @@ showcache :
 http://retclub.retchat.com/retclub/2/0/91
 
 ## __Audience segment__
->Audience segment 有6種 rule  
+>在新增Audience Segment 時有6種不同rule可以選擇,分別是Taxonomy,CustomField,ScoreRule,ItemCode,RFM model,Keyword  
+除了Keyword的部分目前無法用打log方式讓它產生資料,其他都要先打log  
 其中Score rule with 
 >1. score 就是看 rule 的 score
 >2. ranking 就是看 score 的排名
@@ -98,7 +100,44 @@ http://retclub.retchat.com/retclub/2/0/91
 | MANUAL-6bea140c-5273-4856-9b39-af9003f18b05 | 0.3333333333333333 |
 | 58c76ff6-275c-c185-83b1-c7eec4634c05 | 0.6666666666666666 |
 | MANUAL-68ad80a9-ca70-4209-aa9d-f469d4fa4250 | 0.6666666666666666 |
+-----------------------------------
+Keyword目前只能把資料硬塞進cassandra來做測試
+塞資料進cassandra (keyword)
+>UPDATE recommend_keyword_member_aggregate_counter  
+SET impressionnum=impressionnum+1  
+WHERE siteid=1668 and retuid='MANUAL-6bea140c-5273-4856-9b39-af9003f18b05' and keyword='ktest';
 
+>Preconditions:
+>Keyword 要先到Items新增設定:ktest
+
+-------------- 打log --------------
+
+此範例都為打(member2:Female)(item:it1) event tag 的click log
+
+PS:下面網址要換成自己site的資料
+
+CustomField的log:
+1. 進入Event tag頁面-> See all snippet code
+2. 輸入Custom:Custom Field:test, Custom Field Value:123
+3. 點選Apply後複製網址 
+`http://icemdev.retchat.com/t/?a=1668&catclk=18-6840120040&cert=d2f0cb6e0e064d2265c27cc4622d1246&app=WEB&ext=%7B%22test%22%3A%22123%22%7D&retUid=MANUAL-6bea140c-5273-4856-9b39-af9003f18b05`
+
+ItemCode的log:
+1. 進入Event tag頁面-> See all snippet code
+2. 複製網址
+3. 加入vItemId, vItemId是item code  EX:vItemId=101
+`http://icemdev.retchat.com/t/?a=1668&catclk=18-6840120040&cert=d2f0cb6e0e064d2265c27cc4622d1246&app=WEB&vItemId=101&retUid=MANUAL-6bea140c-5273-4856-9b39-af9003f18b05`
+
+RFM model的log:
+1. 進入Event tag頁面-> See all snippet code
+2. 複製網址
+`http://icemdev.retchat.com/t/?a=1668&catclk=18-6840120040&cert=d2f0cb6e0e064d2265c27cc4622d1246&app=WEB&retUid=MANUAL-6bea140c-5273-4856-9b39-af9003f18b05`
+
+Score Rule的log:
+1. 進入Event tag頁面-> See all snippet code
+2. 複製網址
+3. 加入siteMember, siteMember就是member的name, EX:siteMember=member2
+`http://icemdev.retchat.com/t/?a=1668&catclk=18-6840120040&cert=d2f0cb6e0e064d2265c27cc4622d1246&app=WEB&siteMember=member2&retUid=MANUAL-6bea140c-5273-4856-9b39-af9003f18b05`
 
 ## __Detail Report -> COMMODITY ANALYTICS__
 >http://icemdev.retchat.com/action/action.img?t=1517886742877&retUid=ec0affda-7e3a-4040-8376-705d2675b096&siteId=1208&retType=buy&app=WEB&sessionId=fSes-63d1b0fd-33c9-90d2-31ed&t=1517886742877&retCrt=c54c1040d15d563cad59e94d14bfa256&&shopDetail={itemCode}%2C{Price}%2C{Quantity}
@@ -137,6 +176,23 @@ Ex:打入的ext:麥當勞(大麥克),filter就要新增”麥當勞”
 -> fastdata hourly run 將 table 寫成一個.csv 檔  
 -> dmp scheduler 整點時會將此.csv 寫入 target database
 
+Host:danone.retchat.com
+Port:5432
+User Name:gpadmin 
+Password:DN65$321
+DB:danone
+Schema:behavior
+
+Taxonomy:
+Demographic-Age :{"25-44","20-39"}
+Demographic-Gender {"M","F"}
+Demographic-Location {"CN","HK"}
+Interested_In_Parenting {"Parenting1"}
+Parental_Status-Pregnant {"Pregnant1"}
+Parenting-Brain_Development {"Development1"}
+Parenting-Easy_Digestion {"Digestion1"}
+Parenting-Future_Health {"Health1"}
+
 ## __Source Sync Data流程__
 
 .csv經過dmp scheduler daily run  
@@ -147,6 +203,17 @@ Ex:打入的ext:麥當勞(大麥克),filter就要新增”麥當勞”
 log範例: 
 http://icemdev.retchat.com/p/?a=1720&catclk=18-11605781419&cert=c0ae88123e7a142a1d5216d6bb173c85&app=WEB&retUid=MANUAL-26b3464e-c1f8-4f74-b18f-8ffce869c374&ckType=12&interest=shopping  
 只能打系統預設好的macro name , 到 icem_dsp_macro 看
+
+## EMAIL設定
+>GMAIL的設定  
+Mail Host : smtp.gmail.com  
+Account : liaobosiang@gmail.com  
+Password : ********
+
+>RETAIR的  
+Mail Host : mail.retair.com  
+Account :　jliao　　
+Password : retair
 
 # __Robot framework memo__
 
@@ -174,3 +241,46 @@ test
     Input Text    //input[@ng-model="user.loginId"]    joeliao
     Input Text    //input[@ng-model="user.password"]    retair
     Click Button    //button[@ng-disabled="loginButton"]
+
+
+
+## __Social Media__
+
+熱帖網
+帳號：support@retair.com
+密碼：123456
+
+AppID： wx2db92c8137ccdcd3
+AppSecret: b8f4d1e5d2604dff91bb4ab917acf451
+public_id:  gh_54b5d05b7b89
+Merchant ID : 12386517
+
+
+樂愛創意
+帳號：mfan@retair.com
+密碼： 123456
+AppID： wx9e3ed7106f932c72
+AppSecret: d4829e8e9c17eef3dafab8682949197a
+public_id:  gh_f82b8f91f362
+Merchant ID : 12386480
+
+https://retclub.retchat.com/agent/weixin/callback/event?publicId=gh_f82b8f91f362
+
+
+## Third-party tag
+Google
+
+head
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PCHV7GL');</script>
+<!-- End Google Tag Manager -->
+
+body
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCHV7GL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
