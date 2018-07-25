@@ -40,6 +40,12 @@ Recommendation中,visit的推薦是針對item的visit次數做推薦
 e.g. visit設定 click count < 15,則在 cassandra 中 recommend_member_aggregate_counter ,  
 在推薦的item list中,當某個 retuid 的 clkitem 的 clknum < 15時 就會被推薦出來
  
+Attirubte:
+When upload file contains attribute:jogging,but taxonomy doesnt set attribute:jogging.  
+Recommendation's attribute can see attribute:jogging.  
+Because of Service team want to upload first and then set what attribute they really need to use.
+
+
 ## __Social Media__
 
 set cookie on PC to test weixin
@@ -167,6 +173,8 @@ Ex:打入的ext:麥當勞(大麥克),filter就要新增”麥當勞”
 >Campaign pixel打conversion的log時有特別規則  
 需要到Miscellaneous設定Attribute Model 
 
+Campaign 的 Redirect URL status code 會是302
+
 
 ## __Target Sync Data流程__
 
@@ -246,26 +254,39 @@ test
 
 ## __Social Media__
 
+appId,appSecret是必要的,因為要跟微信拿toke必須用到
+publicId為非必要填入因為我們無法知道正確性
+就算填假的,也只有在發送message,手機收不到才能知道是否為假的
+e.g.送出去API雖然為200但不知道那邊有沒有成功運作
+mechantId應該為payment用到的
+
 熱帖網
 帳號：support@retair.com
 密碼：123456
 
-AppID： wx2db92c8137ccdcd3
-AppSecret: b8f4d1e5d2604dff91bb4ab917acf451
-public_id:  gh_54b5d05b7b89
-Merchant ID : 12386517
+appId： wx2db92c8137ccdcd3
+appSecret: b8f4d1e5d2604dff91bb4ab917acf451
+publicId:  gh_54b5d05b7b89
+merchantId : 12386517
 
 
 樂愛創意
 帳號：mfan@retair.com
 密碼： 123456
-AppID： wx9e3ed7106f932c72
-AppSecret: d4829e8e9c17eef3dafab8682949197a
-public_id:  gh_f82b8f91f362
-Merchant ID : 12386480
+appId ： wx9e3ed7106f932c72
+appSecret : d4829e8e9c17eef3dafab8682949197a
+publicId :  gh_f82b8f91f362
+merchantId : 12386480
 
 https://retclub.retchat.com/agent/weixin/callback/event?publicId=gh_f82b8f91f362
 
+
+LINE
+
+APP ID : 1561704221
+APP secret : 0a19c890689bc5969138901776da0d84
+message ID : 1561704378
+message secret : c6479c83ab91245384a40357e98491e8
 
 ## Third-party tag
 Google
@@ -284,3 +305,46 @@ body
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCHV7GL"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+用 Firefox 無痕模式測試 google third party tag
+如果有打開 tracking protection 的話會無法發出 log
+![cassandra](image/tracking_protection.png)
+
+
+
+rulebase 根據設置的規則做推薦
+
+browsinghistory 根據該用戶曾經瀏覽過的商品,推薦給該用戶
+  recommend_ibh_user_to_item_clickstream_result
+  recommend_ibh_user_to_item_conversion_result
+    userId | result
+    11f5e809-b6d2-dd9c-a2fc-eeaae9efa0d6 | [{itemcode: 'a004', score: 3, flag: 0}]
+
+reminder 該用戶以前買過，過一定時間後提示再買
+  recommend_reminder_user_to_item_result
+    userId | result
+    4b50dd94-6d9-7039-3c4e-376b40d858d8 | [{itemcode: 'a001', score: -1, flag: 0}]
+
+userauto 根據該用戶的特性 (EX :男或女) 自動做推薦給該用戶
+  recommend_user_to_item_clickstream_result
+  recommend_user_to_item_conversion_result
+    userId | result
+    11f5e809-b6d2-dd9c-a2fc-eeaae9efa0d6 | [{itemcode: 'a002', score: 87.73685, flag: 0}]
+
+itemauto 根據所有用戶點選或購買的商品,自動推薦商品給該用戶
+  recommend_item_to_item_clickstream_result
+  recommend_item_to_item_conversion_result
+    itemCode | result
+    a001 | [{itemcode: 'a002', score: 3, flag: 1}]
+
+ranking 根據所有用戶購買商品次數,做一個商品排名,然後推薦給該用戶
+  recommend_rank_item_to_item_clickstream_result
+  recommend_rank_item_to_item_conversion_result
+    itemCode | result
+    0 | [{itemcode: 'a002', score: 4, flag: 0}]
+
+buyafterviewing 根據所有用戶看過,然後購買的商品,推薦給該用戶
+  recommend_bav_item_to_item_result
+    itemCode | result
+    B05737E | [{itemcode: 'C07308J', score: 0.5, flag: 0}, {itemcode: 'F06020R', score: 0.5, flag: 0}]
+
